@@ -1,0 +1,19 @@
+{
+  "name": "optimalstream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "me",
+  "license": "WTFPL",
+  "devDependencies": {
+    "mocha": "^6.2.1"
+  },
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
+}
