@@ -9,9 +9,10 @@ createTestFile();
 
 const MAX_LOOP_AT_SAME_BYTE = 10;
 
-const rate = 40;
-const tolerance = 10;
-
+/*params*/
+const rate = 1;
+const tolerance = 2;
+/*end params*/
 let max_bytes = 64;
 let min_bytes = 1;
 let old_min_bytes = 64;
@@ -20,8 +21,8 @@ let current_bytes = 64;
 let loop_at_same_bytes = 0;
 let props = [];
 
-
 const Cycle = new EventEmitter();
+
 Cycle.on("done", hwm => {
     //the rate is reached, then
     //store the highWaterMark somewhere...
