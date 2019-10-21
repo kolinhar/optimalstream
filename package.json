@@ -11,7 +11,7 @@
   "author": "me",
   "license": "WTFPL",
   "devDependencies": {
-    "mocha": "^6.2.1"
+    "mocha": "^6.2.2"
   },
   "dependencies": {
     "colors": "^1.4.0"

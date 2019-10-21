@@ -1,4 +1,5 @@
 const colors = require('colors');
+const {notNegativeNumber} = require("./types");
 const {octets, TEST_FILE_PATH, TEST_FILE_COPY_PATH} = require("./constants");
 const {checkTolerance, moy, testValue} = require("./calcul");
 const {EventEmitter} = require("events");
@@ -10,9 +11,10 @@ createTestFile();
 const MAX_LOOP_AT_SAME_BYTE = 10;
 
 /*params*/
-const rate = 1;
-const tolerance = 2;
+let rate = 1;
+let tolerance = 2;
 /*end params*/
+
 let max_bytes = 64;
 let min_bytes = 1;
 let old_min_bytes = 64;
@@ -20,6 +22,19 @@ let old_max_bytes = 1;
 let current_bytes = 64;
 let loop_at_same_bytes = 0;
 let props = [];
+
+const args = process.argv;
+
+const argRateIndex = args.map(x => x.toLocaleLowerCase()).indexOf("rate");
+const argToleranceIndex = args.map(x => x.toLocaleLowerCase()).indexOf("tolerance");
+
+if (argRateIndex !== -1) {
+    rate = notNegativeNumber(args[argRateIndex + 1]);
+}
+
+if (argToleranceIndex !== -1) {
+    tolerance = notNegativeNumber(args[argToleranceIndex + 1]);
+}
 
 const Cycle = new EventEmitter();
 
@@ -37,7 +52,7 @@ Cycle.on("abort", () => {
     //calc moyenne
     const moyenne = moy(props);
     // console.table(moyenne);
-    console.table(moyenne.map(val=>{
+    console.table(moyenne.map(val => {
         const v = checkTolerance(rate, tolerance, val.moyRate);
         val.label = (v === -1 || v === 1) ? 'recommended' : 'out of range';
         return val;
@@ -57,7 +72,7 @@ Cycle.on("next", () => {
         return Cycle.emit("abort");
     }
 
-    if (min_bytes === max_bytes){
+    if (min_bytes === max_bytes) {
         return Cycle.emit("done", max_bytes);
     }
 
